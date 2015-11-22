@@ -5,6 +5,7 @@ const {
   Text,
   StyleSheet,
   propTypes,
+  Image
 } = React;
 
 class Todo extends React.Component {
@@ -13,15 +14,21 @@ class Todo extends React.Component {
     super(props);
   }
 
-
   render(){
     return(
+
       <View style={styles.container}>
         <View style={styles.completed}>
           <View style={this.props.completed ? styles.completedIcon : styles.uncompletedIcon}/>
         </View>
+
+
         <Text style={styles.name} >{this.props.name}</Text>
       </View>
+
+
+
+
     );
   }
 };
@@ -41,6 +48,8 @@ styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
+    backgroundColor: '#eee',
+    opacity: 0.75,
   },
   completedIcon: {
     height: 30,
@@ -66,7 +75,12 @@ styles = StyleSheet.create({
 
   name: {
     flex: 10,
-    padding: 20,
+    padding: 50,
+  },
+
+  backGroundImage: {
+    height: 50,
+    width: 50,
   },
 
 });
