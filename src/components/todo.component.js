@@ -13,19 +13,65 @@ class Todo extends React.Component {
     super(props);
   }
 
-  render(){
 
+  render(){
     return(
-      <View>
-        <Text> {this.props.name}  {this.props.completed}</Text>
+      <View style={styles.container}>
+        <View style={styles.completed}>
+          <View style={this.props.completed ? styles.completedIcon : styles.uncompletedIcon}/>
+        </View>
+        <Text style={styles.name} >{this.props.name}</Text>
       </View>
     );
   }
 };
 
+
+
 // Todo.propTypes = {
 //   name:  PropTypes.string.isRequired,
 //   completed:  PropTypes.bool.isRequired,
 // };
+
+
+
+
+
+styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  completedIcon: {
+    height: 30,
+    width: 30,
+    alignSelf: 'center',
+    borderWidth: 0.5,
+    borderRadius: (() => {console.log(this); return (30/2)} )(), // just because I can
+    backgroundColor: 'green',
+  },
+
+  uncompletedIcon: {
+    height: 30,
+    width: 30,
+    borderWidth: 0.5,
+    alignSelf: 'center',
+    borderRadius: (() => {console.log(this); return (30/2)} )(), // just because I can
+  },
+
+  completed: {
+    flex: 2,
+    alignSelf: 'center',
+  },
+
+  name: {
+    flex: 10,
+    padding: 20,
+  },
+
+});
+
+
+
 
 export default Todo;
