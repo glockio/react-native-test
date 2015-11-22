@@ -3,17 +3,42 @@ import React from 'react-native';
 import Immutable from 'immutable';
 import Todo from './todo.component';
 
-const {StyleSheet, Component, ListView, PropTypes, View, Image, Text} = React;
+const {StyleSheet, Component, TextInput, TouchableHighlight,
+  ListView, PropTypes, View, Image, Text} = React;
 
 class Todos extends Component {
 
   constructor(props){
     super(props);
+
+    this.state = {
+      newTodoName: ""
+    };
+
     this.initListViewDataSoruce();
   }
 
   initListViewDataSoruce(){
     this.dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+  }
+
+
+  onTextChange(text) {
+
+    console.log(text);
+    this.setState({
+      newTodoName: text
+    });
+
+    console.log(this.state);
+  }
+
+  saveNewTodo() {
+
+    console.log("saving new todo...")
+    this.setState({
+      newTodoName: ''
+    })
   }
 
   render(){
@@ -27,8 +52,9 @@ class Todos extends Component {
           <Text>Todos</Text>
         </View>
 
-          <Image source={require('./enjoyThings.jpg')} style={styles.backGroundImage}>
+          <Image source={require('./enjoyThings.jpg')} style={styles.backGroundImage} >
             <View style={styles.body}>
+
               <ListView
                 style={styles.list}
                 dataSource={dataSource.cloneWithRows(todos)}
@@ -40,11 +66,14 @@ class Todos extends Component {
         </Image>
 
 
-
-
-
         <View style={styles.footer}>
-          <Text>Footer</Text>
+          <TextInput value={this.state.newTodoName} style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            onChangeText={ (text) => this.onTextChange(text) }
+          />
+
+          <TouchableHighlight onPress={this.saveNewTodo.bind(this)}>
+            <Text> Submit</Text>
+          </TouchableHighlight>
         </View>
       </View>
     );
@@ -127,7 +156,7 @@ const styles = StyleSheet.create({
   footer: {
     backgroundColor: 'red',
     flex: 0,
-    height: 50,
+    height: 100,
 
       // flex: 2,
       // flex: 3,

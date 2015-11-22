@@ -25,24 +25,9 @@ class Todo extends React.Component {
 
         <Text style={styles.name} >{this.props.name}</Text>
       </View>
-
-
-
-
     );
   }
 };
-
-
-
-// Todo.propTypes = {
-//   name:  PropTypes.string.isRequired,
-//   completed:  PropTypes.bool.isRequired,
-// };
-
-
-
-
 
 styles = StyleSheet.create({
   container: {
