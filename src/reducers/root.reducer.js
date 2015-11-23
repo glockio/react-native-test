@@ -1,18 +1,18 @@
 
-import {Map, List, fromJS} from 'immutable';
-import {setTodos} from '../actions/todo.actions';
 
+import {Map, List, fromJS} from 'immutable';
+import todosReducer from './todos.reducer';
 
 export default function rootReducer(state=Map(), action) {
 
   switch (action.type) {
-  case 'SET_TODOS':
-    console.log("calling set todos...")
-    return setTodos(state, action.todos);
-  }
+
+    // TODOS SCOPE
+    // case 'SET_TODOS':
+    case 'SET_DEFAULT_TODOS':
+      return state.updateIn(['todos'], (scopedState) => todosReducer(scopedState, action));
+
+   }
 
   return state;
 }
-
-
-

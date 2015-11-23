@@ -3,10 +3,14 @@ import {connect} from 'react-redux/native';
 import Todos from '../components/todos.component';
 
 
-function mapStateToProps (store) {
+
+
+function mapStateToProps (state, dispatch) {
+  console.log("mapping...")
+
   return({
-    todos: store.get('todos')
-  })
+    todos: state.get('todos')
+  });
 }
 
 export default connect(mapStateToProps)(Todos);

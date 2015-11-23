@@ -42,7 +42,10 @@ class Todos extends Component {
   }
 
   render(){
-    const todos = this.props.todos.toJS();
+
+    const todos = this.props.todos ? this.props.todos.toJS() : [];
+    console.log()
+
     var dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return(
 
@@ -206,9 +209,9 @@ const styles = StyleSheet.create({
 });
 
 
-Todos.propTypes = {
-  todos: PropTypes.instanceOf(Immutable.List).isRequired
-};
+// Todos.propTypes = {
+//   todos: PropTypes.instanceOf(Immutable.List).isRequired
+// };
 
 
 

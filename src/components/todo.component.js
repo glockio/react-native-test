@@ -21,8 +21,6 @@ class Todo extends React.Component {
         <View style={styles.completed}>
           <View style={this.props.completed ? styles.completedIcon : styles.uncompletedIcon}/>
         </View>
-
-
         <Text style={styles.name} >{this.props.name}</Text>
       </View>
     );
