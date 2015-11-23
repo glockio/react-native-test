@@ -3,6 +3,7 @@ import {createStore } from 'redux';
 import {Provider} from 'react-redux/native';
 import rootReducer from './src/reducers/root.reducer';
 import App from './src/containers/app.container';
+import * as todoActions from './src/actions/todo.actions'
 import {Map} from 'immutable';
 
 
@@ -16,7 +17,7 @@ const store = createStore(rootReducer);
 // Demo store.dispatch
 
 setTimeout(function(){
-  store.dispatch({type: "SET_DEFAULT_TODOS"})
+  store.dispatch(todoActions.setDefaultTodos())
 }, 3000);
 
 // View Store State In Console

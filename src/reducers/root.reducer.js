@@ -9,6 +9,7 @@ export default function rootReducer(state=Map(), action) {
 
     // TODOS SCOPE
     // case 'SET_TODOS':
+    case 'ADD_TODO':
     case 'SET_DEFAULT_TODOS':
       return state.updateIn(['todos'], (scopedState) => todosReducer(scopedState, action));
 

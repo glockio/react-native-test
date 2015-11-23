@@ -2,7 +2,7 @@
 import React from 'react-native';
 import Immutable from 'immutable';
 import Todo from './todo.component';
-
+import NewTodo from './newTodo.component';
 const {StyleSheet, Component, TextInput, TouchableHighlight,
   ListView, PropTypes, View, Image, Text} = React;
 
@@ -11,10 +11,7 @@ class Todos extends Component {
   constructor(props){
     super(props);
 
-    this.state = {
-      newTodoName: ""
-    };
-
+    console.log(props);
     this.initListViewDataSoruce();
   }
 
@@ -23,29 +20,8 @@ class Todos extends Component {
   }
 
 
-  onTextChange(text) {
-
-    console.log(text);
-    this.setState({
-      newTodoName: text
-    });
-
-    console.log(this.state);
-  }
-
-  saveNewTodo() {
-
-    console.log("saving new todo...")
-    this.setState({
-      newTodoName: ''
-    })
-  }
-
   render(){
-
     const todos = this.props.todos ? this.props.todos.toJS() : [];
-    console.log()
-
     var dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return(
 
@@ -70,13 +46,7 @@ class Todos extends Component {
 
 
         <View style={styles.footer}>
-          <TextInput value={this.state.newTodoName} style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-            onChangeText={ (text) => this.onTextChange(text) }
-          />
-
-          <TouchableHighlight onPress={this.saveNewTodo.bind(this)}>
-            <Text> Submit</Text>
-          </TouchableHighlight>
+          <NewTodo onSubmit={this.props.todoActions.addTodo}/>
         </View>
       </View>
     );

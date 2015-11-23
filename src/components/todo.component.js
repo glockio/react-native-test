@@ -16,7 +16,6 @@ class Todo extends React.Component {
 
   render(){
     return(
-
       <View style={styles.container}>
         <View style={styles.completed}>
           <View style={this.props.completed ? styles.completedIcon : styles.uncompletedIcon}/>
