@@ -5,14 +5,15 @@ import todosReducer from './todos.reducer';
 
 export default function rootReducer(state=Map(), action) {
 
-  switch (action.type) {
+  console.log(`Calling ${action.type}...`);
 
-    // TODOS SCOPE
-    // case 'SET_TODOS':
+  switch (action.type) {
     case 'ADD_TODO':
     case 'SET_DEFAULT_TODOS':
       return state.updateIn(['todos'], (scopedState) => todosReducer(scopedState, action));
 
+    case 'SET_FIREBASE_REF':
+      return state.update('fireRef', () => action.fireRef)
    }
 
   return state;

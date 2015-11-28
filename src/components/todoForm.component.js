@@ -1,33 +1,39 @@
 import React from 'react-native';
 const {Text, View, StyleSheet, TextInput, TouchableHighlight} = React;
 
-class NewTodo extends React.Component {
+class TodoForm extends React.Component {
 
   constructor(props){
     super(props);
     this.state = {
-      todoName: ""
+      name: ""
     };
   }
 
   _onChangeText(text) {
+
+
     this.setState({
-      todoName: text
+      name: text
     });
   }
-
   _saveNewTodo() {
-    this.props.onSubmit(this.state.todoName);
+    let newTodo = { name: this.state.name, completed: false}
+    this.props.onSubmit(newTodo);
     this.setState({
-      todoName: ''
+      name: ''
     })
   }
 
   render(){
     return(
       <View style={styles.container}>
-        <TextInput style={styles.input} value={this.state.todoName} onChangeText={this._onChangeText.bind(this)}
-        />
+
+        <View style={styles.test}>
+          <TextInput  style={styles.input} value={this.state.name} onChangeText={this._onChangeText.bind(this)}
+          />
+        </View>
+
         <TouchableHighlight style={styles.submit} onPress={this._saveNewTodo.bind(this)}>
           <Text>Submit</Text>
         </TouchableHighlight>
@@ -39,27 +45,27 @@ class NewTodo extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignSelf: 'center',
-    flexDirection: 'row',
     alignSelf: 'stretch',
+    flexDirection: 'column',
+    borderColor: '#ccc',
+    borderTopWidth: 1,
   },
 
   submit: {
     flex: 1,
+    alignItems: 'center',
+    marginTop: 8,
+    backgroundColor: 'ccc'
   },
-
   input: {
     flex: 1,
-    height: 50,
-    alignSelf: 'center',
-    backgroundColor: 'green',
+    height: 40,
+    borderRadius: 6,
+    padding: 10,
+    margin: 5,
     borderColor: 'gray', borderWidth: 1
   },
 
 });
 
-// NewTodo.propTypes = {
-
-// };
-
-export default NewTodo;
+export default TodoForm;

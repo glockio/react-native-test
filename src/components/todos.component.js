@@ -10,8 +10,6 @@ class Todos extends Component {
 
   constructor(props){
     super(props);
-
-    console.log(props);
     this.initListViewDataSoruce();
   }
 
@@ -19,40 +17,18 @@ class Todos extends Component {
     this.dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
   }
 
-
   render(){
     const todos = this.props.todos ? this.props.todos.toJS() : [];
     var dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return(
-
-
-      <View style={styles.layoutManager}>
-        <View style={styles.header}>
-          <Text>Todos</Text>
-        </View>
-
-          <Image source={require('./enjoyThings.jpg')} style={styles.backGroundImage} >
-            <View style={styles.body}>
-
-              <ListView
-                style={styles.list}
-                dataSource={dataSource.cloneWithRows(todos)}
-
-                // <Todo style={styles.row}/> wont work because todo is really just a function call which returns UI
-                renderRow={ (todo) => <View style={styles.row}><Todo {...todo}/></View> } />
-            </View>
-
-        </Image>
-
-
-        <View style={styles.footer}>
-          <NewTodo onSubmit={this.props.todoActions.addTodo}/>
-        </View>
-      </View>
+      <ListView
+        style={styles.list}
+        dataSource={dataSource.cloneWithRows(todos)}
+        renderRow={ (todo) => <View style={styles.row}><Todo {...todo}/></View> } />
     );
 
   }
-}
+};
 
 
 // My Visualization of flex direction.

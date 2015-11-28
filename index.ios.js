@@ -1,24 +1,33 @@
 import React from 'react-native';
-import {createStore } from 'redux';
+import {createStore, applyMiddleware } from 'redux';
 import {Provider} from 'react-redux/native';
 import rootReducer from './src/reducers/root.reducer';
 import App from './src/containers/app.container';
 import * as todoActions from './src/actions/todo.actions'
-import {Map} from 'immutable';
-
-
+import * as firebaseActions from './src/actions/firebase.actions'
+import Firebase from 'firebase';
+import firebaseUrl from './firebaseUrl';
+import thunk from 'redux-thunk';
 
 const {AppRegistry, Component} = React; // React Must be defined;
 
 // Init redux store with reducer
 
-const store = createStore(rootReducer);
+// create a store that has redux-thunk middleware enabled
+const createStoreWithMiddleware = applyMiddleware(
+  thunk
+)(createStore);
 
-// Demo store.dispatch
 
-setTimeout(function(){
-  store.dispatch(todoActions.setDefaultTodos())
-}, 3000);
+// Init Store with root reducer
+const store = createStoreWithMiddleware(rootReducer);
+
+// Connect to firebase
+const ref = new Firebase(firebaseUrl);
+
+// Set firebase ref in store;
+store.dispatch(firebaseActions.setRef(ref));
+
 
 // View Store State In Console
 console.log(store.getState().toJS());
