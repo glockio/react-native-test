@@ -22,16 +22,14 @@ class TodosApp extends React.Component {
 
         <View style={styles.header}>
           <Text>Todos</Text>
-          <ActivityIndicatorIOS animating={true}/>
         </View>
 
-
-
-        <Image source={require('./enjoyThings.jpg')} style={styles.backGroundImage} >
+        <View style={styles.body}>
           <Fire fireRef={flame} remoteActions={this.props.remoteActions} >
-            <Todos style={styles.body} todos={this.props.todos} todoActions={this.props.todoActions}/>
+            <Todos todos={this.props.todos} todoActions={this.props.todoActions}/>
           </Fire>
-        </Image>
+        </View>
+
 
         <View style={styles.footer}>
           <TodoForm onSubmit={this.props.todoActions.addTodo} />

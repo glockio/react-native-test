@@ -3,8 +3,7 @@ const { View } = React;
 
 class Prometheus extends React.Component {
 
-  constructor(props){
-    super(props);
+  componentDidMount(){
     this.attachRemoteEvents();
   }
 
@@ -38,9 +37,7 @@ class Prometheus extends React.Component {
   }
 
   render(){
-    return(
-      <View>{this.props.children}</View>
-    );
+    return this.props.children;
   }
 }
 
