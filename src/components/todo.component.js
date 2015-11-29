@@ -1,4 +1,5 @@
 import React from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const {
   View,
@@ -7,6 +8,7 @@ const {
   propTypes,
   Image
 } = React;
+
 
 class Todo extends React.Component {
 
@@ -23,10 +25,12 @@ class Todo extends React.Component {
     const {completed, name} = this.props.todo;
     return(
       <View style={styles.container}>
+
         <View style={styles.completed}>
           <View style={completed ? styles.completedIcon : styles.uncompletedIcon}/>
         </View>
         <Text style={styles.name} >{name}</Text>
+        <Icon name="ios-arrow-right" size={30} color="#545FFF" style={styles.icon}/>
       </View>
     );
   }
@@ -70,6 +74,13 @@ styles = StyleSheet.create({
     height: 50,
     width: 50,
   },
+
+  icon: {
+    alignSelf: 'center',
+    marginRight: 20,
+  }
+
+
 
 });
 
