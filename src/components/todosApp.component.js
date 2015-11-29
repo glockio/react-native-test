@@ -3,8 +3,10 @@ import Todos from './todos.component';
 import TodoForm from './todoForm.component';
 import React from 'react-native';
 
-const {StyleSheet, Component, TextInput, TouchableHighlight,
-  ListView, PropTypes, View, Image, Text} = React;
+const {
+  StyleSheet, Component, PropTypes,
+  View, Image, Text, ActivityIndicatorIOS
+} = React;
 
 
 class TodosApp extends React.Component {
@@ -20,7 +22,10 @@ class TodosApp extends React.Component {
 
         <View style={styles.header}>
           <Text>Todos</Text>
+          <ActivityIndicatorIOS animating={true}/>
         </View>
+
+
 
         <Image source={require('./enjoyThings.jpg')} style={styles.backGroundImage} >
           <Fire fireRef={flame} remoteActions={this.props.remoteActions} >

@@ -2,7 +2,9 @@
 import React from 'react-native';
 import Immutable from 'immutable';
 import Todo from './todo.component';
-import NewTodo from './newTodo.component';
+
+
+
 const {StyleSheet, Component, TextInput, TouchableHighlight,
   ListView, PropTypes, View, Image, Text} = React;
 
