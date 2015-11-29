@@ -1,4 +1,4 @@
-import {Map, List, fromJS} from 'immutable';
+import {Map, List, Record} from 'immutable';
 import Firebase from 'firebase';
 import fireBaseUrl from '../../firebaseUrl';
 
@@ -31,8 +31,35 @@ export function addTodo (todo) {
         // success callback  here...
       });
   };
-
 };
+
+function _gettingTodos (status) {
+  return {type: "GETTING_TODOS", payload: {}, meta: {}  };
+}
+
+function _gotTodos (metadata={}) {
+  return {type: "GOT_TODOS", payload: {}, meta: metadata };
+}
+
+export function getTodos (scopedRef) {
+
+  const ref = scopedRef || fireRef;
+  return (dispatch) => {
+    dispatch(_gettingTodos());
+
+    ref.once('value', (snapshot) => {
+       dispatch(_gotTodos());
+       dispatch(setTodos( snapshot.val()) );
+    }, (error) => {
+      dispatch(_gotTodos({error: error}));
+    });
+
+  }
+}
+
+export function setTodos (todos) {
+  return {type: "SET_TODOS", payload: todos, meta: {} };
+}
 
 function _addTodo (todo, meta={}) {
   return {type: "ADD_TODO", payload: todo, meta: {} };

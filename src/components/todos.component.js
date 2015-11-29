@@ -3,34 +3,31 @@ import React from 'react-native';
 import Immutable from 'immutable';
 import Todo from './todo.component';
 
-
-
-const {StyleSheet, Component, TextInput, TouchableHighlight,
-  ListView, PropTypes, View, Image, Text} = React;
+const {StyleSheet, Component,
+  ListView, PropTypes, View, Text} = React;
 
 class Todos extends Component {
 
-  constructor(props){
-    super(props);
+  componentWillMount(){
     this.initListViewDataSoruce();
   }
 
-  initListViewDataSoruce(){
+  initListViewDataSoruce() {
     this.dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
   }
 
   render(){
-    const todos = this.props.todos ? this.props.todos.toJS() : [];
-    var dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const todos = this.props.todos ? this.props.todos.toArray() : [];
     return(
       <ListView
-        style={styles.list}
-        dataSource={dataSource.cloneWithRows(todos)}
-        renderRow={ (todo) => <View style={styles.row}><Todo {...todo}/></View> } />
+        dataSource={this.dataSource.cloneWithRows(todos)}
+        renderRow={ (todo) => <View style={styles.row}><Todo todo={todo}/></View> } />
     );
 
   }
 };
+
+
 
 
 // My Visualization of flex direction.

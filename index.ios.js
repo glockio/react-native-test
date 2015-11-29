@@ -18,20 +18,22 @@ const createStoreWithMiddleware = applyMiddleware(
   thunk
 )(createStore);
 
-
 // Init Store with root reducer
 const store = createStoreWithMiddleware(rootReducer);
 
 // Connect to firebase
 const ref = new Firebase(firebaseUrl);
 
-// Set firebase ref in store;
 store.dispatch(firebaseActions.setRef(ref));
+
+// ref.child('todos').on('value', (snap) => {
+//   let todos = snap.val();
+//   store.dispatch(todoActions.setTodos(todos));
+// });
 
 
 // View Store State In Console
 console.log(store.getState().toJS());
-
 
 class reactNativeTest extends Component {
 

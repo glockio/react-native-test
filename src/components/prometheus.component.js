@@ -3,15 +3,30 @@ const { View } = React;
 
 class Prometheus extends React.Component {
 
-  componentDidMount(){
-    this.attachRemoteEvents();
+
+  constructor(props) {
+    super(props);
+    this.initFirebaseConnections();
   }
 
-  attachRemoteEvents(){
-    const {fireRef: ref, remoteActions} = this.props;
+  initFirebaseConnections(){
+    const onInit = this.props.remoteActions.onInit
+
+    if(onInit) {
+      onInit();
+    }
+
+    this.attachChildEvents();
+  }
+
+
+
+  attachChildEvents(){
+    const {fireRef:remoteActions, ref} = this.props;
 
     if(remoteActions.onAdd) {
-      ref.on('child_added', (snapShot) => {
+      ref.limitToLast(1).on('child_added', (snapShot) => {
+        console.log("calling add...")
         remoteActions.onAdd(snapShot.val());
       });
     }
@@ -37,7 +52,7 @@ class Prometheus extends React.Component {
   }
 
   render(){
-    return this.props.children;
+    return React.cloneElement(this.props.children, {testing: "INFUSED"});
   }
 }
 

@@ -15,8 +15,20 @@ class TodosApp extends React.Component {
     super(props);
   }
 
+  renderBody() {
+
+    if(this.props.loading) {
+      return <ActivityIndicatorIOS animating={true} size='large' style={styles.spinner}/>
+    } else {
+      return(
+        <Todos todos={this.props.todos} todoActions={this.props.todoActions}/>
+      );
+    }
+  }
+
   render(){
     const flame = this.props.fireRef.child('todos'); // scoped firebase ref
+
     return(
       <View style={styles.layoutManager}>
 
@@ -25,11 +37,10 @@ class TodosApp extends React.Component {
         </View>
 
         <View style={styles.body}>
-          <Fire fireRef={flame} remoteActions={this.props.remoteActions} >
-            <Todos todos={this.props.todos} todoActions={this.props.todoActions}/>
+          <Fire fireRef={flame} remoteActions={this.props.remoteActions}>
+            {this.renderBody()}
           </Fire>
         </View>
-
 
         <View style={styles.footer}>
           <TodoForm onSubmit={this.props.todoActions.addTodo} />
@@ -83,6 +94,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignSelf: 'stretch',
   },
+
+  spinner: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    // alignSelf: 'center',
+  }
 });
 
 export default TodosApp;

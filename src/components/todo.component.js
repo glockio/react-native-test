@@ -14,13 +14,19 @@ class Todo extends React.Component {
     super(props);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    // This is what you can do when you use immutable
+    return this.props.todo !== nextProps.todo;
+  }
+
   render(){
+    const {completed, name} = this.props.todo;
     return(
       <View style={styles.container}>
         <View style={styles.completed}>
-          <View style={this.props.completed ? styles.completedIcon : styles.uncompletedIcon}/>
+          <View style={completed ? styles.completedIcon : styles.uncompletedIcon}/>
         </View>
-        <Text style={styles.name} >{this.props.name}</Text>
+        <Text style={styles.name} >{name}</Text>
       </View>
     );
   }
