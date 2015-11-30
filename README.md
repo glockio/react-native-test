@@ -7,7 +7,7 @@
  ``` export default "https://<YOUR_FIREBASE_URL/"; ```
 
 ## The Stack
- 1. Imuteable.js 
+ 1. Immutable.js 
  2.  Redux
  3. Firebase
  4. ReactNative 
