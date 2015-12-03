@@ -6,7 +6,7 @@ const {
   Text,
   StyleSheet,
   propTypes,
-  Image
+  TouchableOpacity
 } = React;
 
 
@@ -24,14 +24,15 @@ class Todo extends React.Component {
   render(){
     const {completed, name} = this.props.todo;
     return(
-      <View style={styles.container}>
-
-        <View style={styles.completed}>
-          <View style={completed ? styles.completedIcon : styles.uncompletedIcon}/>
+      <TouchableOpacity onPress={ () => this.props.onPress(this.props.todo)}>
+        <View style={styles.container}>
+          <View style={styles.completed}>
+            <View style={completed ? styles.completedIcon : styles.uncompletedIcon}/>
+          </View>
+          <Text style={styles.name} >{name}</Text>
+          <Icon name="ios-arrow-right" size={30} color="#545FFF" style={styles.icon}/>
         </View>
-        <Text style={styles.name} >{name}</Text>
-        <Icon name="ios-arrow-right" size={30} color="#545FFF" style={styles.icon}/>
-      </View>
+      </TouchableOpacity>
     );
   }
 };

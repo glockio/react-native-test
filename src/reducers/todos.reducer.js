@@ -1,4 +1,4 @@
-import {OrderedMap, Record, Seq} from 'immutable';
+import {Map, OrderedMap, Record, Seq} from 'immutable';
 
 
 // Keys not included in record schema are ignroed
@@ -13,36 +13,47 @@ const TodoRecord = new Record({
 });
 
 
+export default function todosReducer(scopedState, action) {
 
-export default function todosReducer(state=OrderedMap(), action) {
-
+  const todosState = scopedState.get('todos');
   switch (action.type) {
+
+
     case "ADD_TODO": {
       let todo = new TodoRecord(action.payload);
-      return state.set(todo.key, todo);
+      return todosState.set(todo.key, todo);
     }
-
 
     case "REMOTE_ADD_TODO": {
       let todo = new TodoRecord(action.payload);
 
-      if(state.get(todo.key)) {
-        return state;
+      if(todosState.get(todo.key)) {
+        return todosState;
       } else {
-        return state.set(todo.key, todo);
+        return todosState.set(todo.key, todo);
       }
-
     }
+
+    case "SELECT_TODO": {
+      let selectedTodo = todosState.get(action.payload.todoKey);
+      return scopedState.set('selectedTodo', selectedTodo);
+    }
+
+    case "GETTING_TODOS": {
+      return scopedState.set('loadingTodos', true);
+    }
+
+    case "GOT_TODOS": {
+      return scopedState.set('loadingTodos', false);
+    }
+
     case 'SET_TODOS': {
       // Seq in immutable repersents lazy eval. until I call seq.toOrderedMap the code never runs
       let seq = Seq(action.payload).map( (todoData, key) => new TodoRecord(todoData) )
-      const newState = seq.toOrderedMap();
-      return newState;
+      return scopedState.set('todos', seq.toOrderedMap());
     }
-
-
   }
 
-  return state;
+  return scopedState;
 }
 

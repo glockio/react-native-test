@@ -61,6 +61,10 @@ export function setTodos (todos) {
   return {type: "SET_TODOS", payload: todos, meta: {} };
 }
 
+export function selectTodo (todoKey) {
+  return {type: "SELECT_TODO", payload: {todoKey: todoKey} , meta: {} };
+}
+
 function _addTodo (todo, meta={}) {
   return {type: "ADD_TODO", payload: todo, meta: {} };
 }

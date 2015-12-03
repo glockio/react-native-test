@@ -11,8 +11,6 @@ class TodoForm extends React.Component {
   }
 
   _onChangeText(text) {
-
-
     this.setState({
       name: text
     });

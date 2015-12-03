@@ -16,48 +16,37 @@ const {View, Text, ActivityIndicatorIOS, StyleSheet, TouchableHighlight} = React
 // They are entry points into sections of the app
 
 
-class TodosContainer extends React.Component {
+class TodoItemContainer extends React.Component {
 
-  renderBody() {
-    if(this.props.loading) {
-      return <ActivityIndicatorIOS animating={true} size='large' style={styles.spinner}/>
-    } else {
-      return(
-        <TodoList onRowPress={this.onRowPress.bind(this)} todos={this.props.todos} todoActions={this.props.todoActions}/>
-      );
-    }
-  }
-
-  onRowPress(selectedTodo) {
-    const {nav, todoActions} = this.props;
-    todoActions.selectTodo(selectedTodo.key);
-    nav.push({name: 'todoItem'});
-  }
 
   render(){
-    const flame = this.props.fireRef.child('todos'); // scoped firebase ref
-
     return(
       <View style={styles.layoutManager}>
 
         <View style={styles.header}>
+
           <TouchableHighlight
               style={styles.button}
               underlayColor="#B5B5B5"
               onPress={() => true}>
-              <Text style={styles.buttonText}>TODOS</Text>
+              <Text style={styles.buttonText}>TodoItem</Text>
           </TouchableHighlight>
         </View>
 
         <View style={styles.body}>
-          <Fire fireRef={flame} remoteActions={this.props.remoteActions}>
-            {this.renderBody()}
-          </Fire>
+          <Text>{this.props.todo.name}</Text>
         </View>
 
-        <View style={styles.footer}>
-          <NewTodoForm onSubmit={this.props.todoActions.addTodo} />
-        </View>
+
+          <TouchableHighlight
+              style={styles.button}
+              underlayColor="#B5B5B5"
+              onPress={() => this.props.nav.pop()}>
+              <View style={styles.footer}>
+                <Text>Back</Text>
+              </View>
+          </TouchableHighlight>
+
       </View>
     );
   }
@@ -105,6 +94,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     flexDirection: 'column',
     alignSelf: 'stretch',
+    backgroundColor: '#ccc'
   },
 
   spinner: {
@@ -118,27 +108,13 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps(state) {
-  const todosScope = state.get('_todos_');
-
   return {
-    todos: todosScope.get('todos'),
-    fireRef: state.get('fireRef'),
-    loading: todosScope.get('loadingTodos'),
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  // const remoteActions {onAdd: _addTodo} = todoActionCreators;
-
-  const remoteActions = {
-    onAdd: todoActionCreators.remoteAddTodo,
-    onInit: todoActionCreators.getTodos
-  };
-
-  return {
-    remoteActions: bindActionCreators(remoteActions, dispatch),
-    todoActions: bindActionCreators(todoActionCreators, dispatch),
+    todo: state.getIn(['_todos_', 'selectedTodo']),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodosContainer);
+function mapDispatchToProps(dispatch) {
+  return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoItemContainer);

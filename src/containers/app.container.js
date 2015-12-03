@@ -1,8 +1,11 @@
 import TodosContainer from './todos.container';
+import TodoItemContainer from './todoItem.container';
 import React from 'react-native';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux/native';
 
 const {
- Navigator
+ Navigator, View, Text
 } = React;
 
 class AppContainer extends React.Component {
@@ -10,10 +13,11 @@ class AppContainer extends React.Component {
   renderScene(route, nav) {
     switch (route.name) {
       case 'todos':
-        console.log("calling todos route")
-        return <TodosContainer/>;
+        return <TodosContainer nav={nav}/>;
+      case 'todoItem':
+        return <TodoItemContainer nav={nav}/> ;
       default:
-        return <TodosContainer/>;
+        return <TodosContainer nav={nav}/>;
     }
   }
 
@@ -34,5 +38,22 @@ class AppContainer extends React.Component {
 }
 
 
+// function mapStateToProps(state) {
+//   return {
+//     todos: state.get('todos'),
+//     fireRef: state.get('fireRef'),
+//     loading: state.get('loadingTodos'),
+//   };
+// }
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     routingActions: bindActionCreators(routingActions, dispatch),
+//   }
+// }
+
+
 
 export default AppContainer;
+
+// export default connect(mapStateToProps,mapDispatchToProps)(AppContainer);

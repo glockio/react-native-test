@@ -18,10 +18,11 @@ class Todos extends Component {
 
   render(){
     const todos = this.props.todos ? this.props.todos.toArray() : [];
+    const {onRowPress} = this.props;
     return(
       <ListView
         dataSource={this.dataSource.cloneWithRows(todos)}
-        renderRow={ (todo) => <View style={styles.row}><Todo todo={todo}/></View> } />
+        renderRow={ (todo) => <View style={styles.row}><Todo onPress={onRowPress} todo={todo}/></View> } />
     );
 
   }
