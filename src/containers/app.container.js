@@ -1,28 +1,38 @@
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux/native';
-import TodosApp from '../components/todosApp.component';
-import * as todoActionCreators from '../actions/todo.actions'
+import TodosContainer from './todos.container';
+import React from 'react-native';
 
-function mapStateToProps(state) {
-  return {
-    todos: state.get('todos'),
-    fireRef: state.get('fireRef'),
-    loading: state.get('loadingTodos'),
-  };
-}
+const {
+ Navigator
+} = React;
 
-function mapDispatchToProps(dispatch) {
-  // const remoteActions {onAdd: _addTodo} = todoActionCreators;
+class AppContainer extends React.Component {
 
-  const remoteActions = {
-    onAdd: todoActionCreators.remoteAddTodo,
-    onInit: todoActionCreators.getTodos
-  };
+  renderScene(route, nav) {
+    switch (route.name) {
+      case 'todos':
+        console.log("calling todos route")
+        return <TodosContainer/>;
+      default:
+        return <TodosContainer/>;
+    }
+  }
 
-  return {
-    remoteActions: bindActionCreators(remoteActions, dispatch),
-    todoActions: bindActionCreators(todoActionCreators, dispatch),
+  render(){
+    return(
+      <Navigator
+       initialRoute={ { name: "todos"} }
+       renderScene={this.renderScene.bind(this)}
+       configureScene={ (route) => {
+         if (route.sceneConfig) {
+           return route.sceneConfig;
+         }
+         return Navigator.SceneConfigs.FloatFromRight;
+       }}
+      />
+    );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodosApp);
+
+
+export default AppContainer;
