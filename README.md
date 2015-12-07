@@ -10,13 +10,13 @@
  1. Immutable.js
  2. Redux
  3. Firebase
- 4. ReactNative
+ 4. React Native
 
 ## Todo:
-1.  Add has-many relationship with firebase for todo -> Notes
-2.  ~~Add React Router && Redux simple router~~ No supported on RN. Use Native Routing
-3.  Add android build
-4.  ~~Intergrate Redux dev tools~~ Not Supported On RN
-5.  Add base styles
-6.  Add Animations
-
+* ~Add has-many relationship with firebase (Todo has  many Notes)~
+* Reduce BoilerPlate For Redux Actions. Convetions over config.
+* Swipe Events
+* Add base styles
+* Add Android Build
+* Switch to redux-router?
+* Add Animations

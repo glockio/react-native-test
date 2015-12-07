@@ -30,6 +30,8 @@ class AppContainer extends React.Component {
          if (route.sceneConfig) {
            return route.sceneConfig;
          }
+
+
          return Navigator.SceneConfigs.FloatFromRight;
        }}
       />
@@ -37,23 +39,4 @@ class AppContainer extends React.Component {
   }
 }
 
-
-// function mapStateToProps(state) {
-//   return {
-//     todos: state.get('todos'),
-//     fireRef: state.get('fireRef'),
-//     loading: state.get('loadingTodos'),
-//   };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     routingActions: bindActionCreators(routingActions, dispatch),
-//   }
-// }
-
-
-
 export default AppContainer;
-
-// export default connect(mapStateToProps,mapDispatchToProps)(AppContainer);

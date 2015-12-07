@@ -1,10 +1,9 @@
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux/native';
-import NewTodoForm from '../components/todos/todoForm.component';
-import TodoList from '../components/todos/todosList.component';
+import NotesList from '../components/notes/notesList.component';
 import Fire from '../components/prometheus.component';
-import * as todoActionCreators from '../actions/todo.actions'
 import React from 'react-native';
+import * as notesActions from '../actions/notes.actions';
 
 const {View, Text, ActivityIndicatorIOS, StyleSheet, TouchableHighlight} = React;
 
@@ -18,8 +17,17 @@ const {View, Text, ActivityIndicatorIOS, StyleSheet, TouchableHighlight} = React
 
 class TodoItemContainer extends React.Component {
 
+  constructor(props){
+    super(props);
+  }
+
+  componentDidMount() {
+    const {todo, notesActions} = this.props;
+    notesActions.loadNotes(todo.key);
+  }
 
   render(){
+    const notes = this.props.notes;
     return(
       <View style={styles.layoutManager}>
 
@@ -35,6 +43,7 @@ class TodoItemContainer extends React.Component {
 
         <View style={styles.body}>
           <Text>{this.props.todo.name}</Text>
+            <NotesList notes={notes}/>
         </View>
 
 
@@ -108,13 +117,21 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps(state) {
+  console.log(state.toJS());
+  const todo = state.getIn(['_todos_', "selectedTodo"]);
   return {
-    todo: state.getIn(['_todos_', 'selectedTodo']),
+    notes: state.getIn(['notesByTodoId', todo.key]),
+    fireRef: state.get('fireRef'),
+    todo
   }
+
 }
 
+
 function mapDispatchToProps(dispatch) {
-  return {}
+  return {
+    notesActions: bindActionCreators(notesActions, dispatch),
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoItemContainer);

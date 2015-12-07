@@ -3,6 +3,7 @@ import {createStore, applyMiddleware } from 'redux';
 import {Provider} from 'react-redux/native';
 import rootReducer from './src/reducers/root.reducer';
 import App from './src/containers/app.container';
+import * as notesActions from './src/actions/notes.actions'
 import * as todoActions from './src/actions/todo.actions'
 import * as firebaseActions from './src/actions/firebase.actions'
 import Firebase from 'firebase';
@@ -25,11 +26,6 @@ const store = createStoreWithMiddleware(rootReducer);
 const ref = new Firebase(firebaseUrl);
 
 store.dispatch(firebaseActions.setRef(ref));
-
-// ref.child('todos').on('value', (snap) => {
-//   let todos = snap.val();
-//   store.dispatch(todoActions.setTodos(todos));
-// });
 
 
 // View Store State In Console

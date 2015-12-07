@@ -1,7 +1,15 @@
 
 
-import {Map, OrderedMap, List} from 'immutable';
+import {Map, Seq, List,OrderedMap, Record} from 'immutable';
 import todosReducer from './todos.reducer';
+
+
+
+const NoteRecord = new Record({
+  key: undefined,
+  text: '',
+  todoId: undefined
+});
 
 
 const initialState = Map({
@@ -11,6 +19,7 @@ const initialState = Map({
     todos:  OrderedMap(),
     selectedTodo: null,
   }),
+  'notesByTodoId': Map({})
 });
 
 export default function rootReducer(state=initialState, action) {
@@ -27,6 +36,14 @@ export default function rootReducer(state=initialState, action) {
 
     case 'SET_FIREBASE_REF':
       return state.update('fireRef', () => action.fireRef)
+
+    case "SET_NOTES":
+      const {todoId, notes} = action.payload
+
+      let seq = Seq(notes).map( (noteData, key) => new NoteRecord(noteData) )
+
+      return state.updateIn(["notesByTodoId"], (scopedState) => scopedState.set(todoId, seq.toMap()) );
+
    }
 
   return state;

@@ -20,17 +20,17 @@ export default function todosReducer(scopedState, action) {
 
 
     case "ADD_TODO": {
+      console.log("Adding new todo")
       let todo = new TodoRecord(action.payload);
-      return todosState.set(todo.key, todo);
+      return scopedState.setIn(['todos', todo.key], todo);
     }
 
     case "REMOTE_ADD_TODO": {
       let todo = new TodoRecord(action.payload);
-
       if(todosState.get(todo.key)) {
-        return todosState;
+        return scopedState;
       } else {
-        return todosState.set(todo.key, todo);
+        return scopedState.setIn(['todos', todo.key], todo);
       }
     }
 
