@@ -13,10 +13,10 @@
  4. React Native
 
 ## Todo:
-* ~Add has-many relationship with firebase (Todo has  many Notes)~
+* ~~Add has-many relationship with firebase (Todo has  many Notes)~~
 * Reduce BoilerPlate For Redux Actions. Convetions over config.
 * Swipe Events
 * Add base styles
 * Add Android Build
-* Switch to redux-router?
-* Add Animations
+* **CLEAN UP**  Not in a very good state atm. Need to clean up code and move to react-native-boiler-plate
+
