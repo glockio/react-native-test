@@ -2,6 +2,11 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux/native';
 import React from 'react-native';
 import * as counterActions from "../actions/count.actions";
+import Firebase from 'firebase';
+
+const firebaseUrl = "https://fiery-heat-567.firebaseio.com/";
+const rootFireRef =  new Firebase(firebaseUrl);
+const countRef = rootFireRef.child('count');
 
 const {View, Text, ActivityIndicatorIOS, StyleSheet, TouchableHighlight} = React;
 
@@ -21,12 +26,20 @@ class CountComponent extends React.Component {
     console.log(this.props);
   }
 
-
   componentWillMount() {
-    this.props.onUpdate();
+
+
+    this.props.fetchCount();
+
+    countRef.on('value', (snapshot) => {
+      count = snapshot.val();
+
+      this.props.setCount(count);
+    })
   }
 
   render() {
+    const {count, loading} = this.props;
     return(
       <View style={styles.container}>
         <TouchableHighlight onPress={this.props.onUpdate.bind(this)}>
@@ -35,7 +48,8 @@ class CountComponent extends React.Component {
           </View>
         </TouchableHighlight>
         <View style={styles.body}>
-          <Text>{this.props.count}</Text>
+          <Text>{count}</Text>
+          <Text>{loading ? "I AM LOADING" : "False"} </Text>
         </View>
       </View>
     );
@@ -45,6 +59,7 @@ class CountComponent extends React.Component {
 
 function mapStateToProps(reduxStore) {
   return {
+    loading: reduxStore.get('loading'),
     count: reduxStore.get('count')
   };
 }
@@ -53,8 +68,9 @@ function mapDispatchToProps(dispatch) {
   // const remoteActions {onAdd: _addTodo} = todoActionCreators;
 
   return {
-
+    fetchCount:  bindActionCreators(counterActions.fetchCount, dispatch),
     onUpdate: bindActionCreators(counterActions.updateCount, dispatch),
+    setCount: bindActionCreators(counterActions.setCount, dispatch),
     // updateCount: bindActionCreators(remoteActions, dispatch),
     // todoActions: bindActionCreators(todoActionCreators, dispatch),
   };
