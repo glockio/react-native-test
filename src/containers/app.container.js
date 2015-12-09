@@ -30,8 +30,6 @@ class AppContainer extends React.Component {
          if (route.sceneConfig) {
            return route.sceneConfig;
          }
-
-
          return Navigator.SceneConfigs.FloatFromRight;
        }}
       />

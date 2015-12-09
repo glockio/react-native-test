@@ -18,7 +18,6 @@ export default function todosReducer(scopedState, action) {
   const todosState = scopedState.get('todos');
   switch (action.type) {
 
-
     case "ADD_TODO": {
       console.log("Adding new todo")
       let todo = new TodoRecord(action.payload);

@@ -28,12 +28,15 @@ class TodosContainer extends React.Component {
     }
   }
 
+  this.updateCount();
+
   onRowPress(selectedTodo) {
     const {nav, todoActions} = this.props;
     todoActions.selectTodo(selectedTodo.key);
     nav.push({name: 'todoItem'});
   }
 
+  this.props.count;
   render(){
     const flame = this.props.fireRef.child('todos'); // scoped firebase ref
 
@@ -117,13 +120,9 @@ const styles = StyleSheet.create({
 });
 
 
-function mapStateToProps(state) {
-  const todosScope = state.get('_todos_');
-
+function mapStateToProps(reduxStore) {
   return {
-    todos: todosScope.get('todos'),
-    fireRef: state.get('fireRef'),
-    loading: todosScope.get('loadingTodos'),
+    count: reduxStore.get('count')
   };
 }
 
@@ -136,7 +135,7 @@ function mapDispatchToProps(dispatch) {
   };
 
   return {
-    remoteActions: bindActionCreators(remoteActions, dispatch),
+    updateCount: bindActionCreators(remoteActions, dispatch),
     todoActions: bindActionCreators(todoActionCreators, dispatch),
   }
 }
